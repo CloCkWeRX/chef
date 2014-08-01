@@ -1,6 +1,8 @@
 ---
 provisioner:
   name: chef_solo
+  solo_rb:
+    cookbook_path: "./cookbooks"
   github: "opscode/chef"
   branch: <%= %x(git rev-parse HEAD) %>
   require_chef_omnibus: true
@@ -10,7 +12,8 @@ platforms:
     driver_plugin: vagrant
 
 suites:
-  - name: default
+  - name: webserver
     run_list:
-      - recipe[git-cookbook::default]
+      - recipe[apt::default]
+      - recipe[webserver::default]
     attributes:
